@@ -6,6 +6,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,19 +30,39 @@ import com.google.firebase.storage.UploadTask;
 import java.text.DateFormat;
 import java.util.Calendar;
 public class UploadActivity extends AppCompatActivity {
-    ImageView uploadImage;
+    ImageView uploadImage, back;
     Button saveButton;
-    EditText uploadTopic, uploadDesc, uploadLang;
+    EditText uploadProducto, uploadDesc, uploadPrecio, uploadMarca, uploadDisp, uploadEspecs;
     String imageURL;
+    TextView titulo;
     Uri uri;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         uploadImage = findViewById(R.id.uploadImage);
         uploadDesc = findViewById(R.id.uploadDesc);
-        uploadTopic = findViewById(R.id.uploadTopic);
-        uploadLang = findViewById(R.id.uploadLang);
+        uploadProducto = findViewById(R.id.uploadProducto);
+        uploadPrecio = findViewById(R.id.uploadPrecio);
+        uploadMarca = findViewById(R.id.uploadMarca);
+        uploadDisp = findViewById(R.id.uploadDisp);
+        uploadEspecs = findViewById(R.id.uploadEspecs);
+
+        titulo = findViewById(R.id.tv_title_toolbar);
+        titulo.setText("");
+
+        back = findViewById(R.id.btn_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UploadActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         saveButton = findViewById(R.id.saveButton);
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -68,6 +91,7 @@ public class UploadActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 saveData();
             }
         });
@@ -99,14 +123,19 @@ public class UploadActivity extends AppCompatActivity {
         });
     }
     public void uploadData(){
-        String title = uploadTopic.getText().toString();
+        String producto = uploadProducto.getText().toString();
+        String precio = uploadPrecio.getText().toString();
+        String marca = uploadMarca.getText().toString();
         String desc = uploadDesc.getText().toString();
-        String lang = uploadLang.getText().toString();
-        DataClass dataClass = new DataClass(title, desc, lang, imageURL);
+        String especs = uploadEspecs.getText().toString();
+        String disp = uploadDisp.getText().toString();
+
+
+        DataClass dataClass = new DataClass(producto,precio, marca, desc, especs, disp, imageURL);
         //We are changing the child from title to currentDate,
         // because we will be updating title as well and it may affect child value.
         String currentDate = DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
-        FirebaseDatabase.getInstance().getReference("Android Tutorials").child(title)
+        FirebaseDatabase.getInstance().getReference("Categoria Tecnologia").child(producto)
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

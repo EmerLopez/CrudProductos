@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
         adapter = new MyAdapter(MainActivity.this, dataList);
         recyclerView.setAdapter(adapter);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Categoria Tecnologia");
         dialog.show();
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public void searchList(String text){
         ArrayList<DataClass> searchList = new ArrayList<>();
         for (DataClass dataClass: dataList){
-            if (dataClass.getDataTitle().toLowerCase().contains(text.toLowerCase())){
+            if (dataClass.getDataproducto().toLowerCase().contains(text.toLowerCase())){
                 searchList.add(dataClass);
             }
         }

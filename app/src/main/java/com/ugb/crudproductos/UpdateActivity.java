@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,15 +30,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 public class UpdateActivity extends AppCompatActivity {
-    ImageView updateImage;
+    ImageView updateImage, back;;
     Button updateButton;
-    EditText updateDesc, updateTitle, updateLang;
-    String title, desc, lang;
+    EditText updateDesc, updateProducto, updatePrecio, updateMarca, updateDisp, updateEspecs;
+    String producto, desc, precio, marca, disp, especs;
     String imageUrl;
     String key, oldImageURL;
     Uri uri;
+    TextView titulo;
     DatabaseReference databaseReference;
     StorageReference storageReference;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +48,24 @@ public class UpdateActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         updateDesc = findViewById(R.id.updateDesc);
         updateImage = findViewById(R.id.updateImage);
-        updateLang = findViewById(R.id.updateLang);
-        updateTitle = findViewById(R.id.updateTitle);
+        updatePrecio = findViewById(R.id.updatePrecio);
+        updateProducto = findViewById(R.id.updateProducto);
+        updateMarca = findViewById(R.id.updateMarca);
+        updateDisp = findViewById(R.id.updateDisp);
+        updateEspecs = findViewById(R.id.updateEspecs);
+
+        titulo = findViewById(R.id.tv_title_toolbar);
+        titulo.setText("Editar Producto");
+
+        back = findViewById(R.id.btn_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UpdateActivity.this, DetailActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -64,13 +85,17 @@ public class UpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             Glide.with(UpdateActivity.this).load(bundle.getString("Image")).into(updateImage);
-            updateTitle.setText(bundle.getString("Title"));
-            updateDesc.setText(bundle.getString("Description"));
-            updateLang.setText(bundle.getString("Language"));
+            updateProducto.setText(bundle.getString("Producto"));
+            updatePrecio.setText(bundle.getString("Precio"));
+            updateMarca.setText(bundle.getString("Marca"));
+            updateDesc.setText(bundle.getString("Descripcion"));
+            updateEspecs.setText(bundle.getString("Especificaciones"));
+            updateDisp.setText(bundle.getString("Disponibilidad"));
+
             key = bundle.getString("Key");
             oldImageURL = bundle.getString("Image");
         }
-        databaseReference = FirebaseDatabase.getInstance().getReference("Android Tutorials").child(key);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Categoria Tecnologia").child(key);
         updateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,11 +139,14 @@ public class UpdateActivity extends AppCompatActivity {
         });
     }
     public void updateData(){
-        title = updateTitle.getText().toString().trim();
+        producto = updateProducto.getText().toString().trim();
+        precio = updatePrecio.getText().toString();
+        marca = updateMarca.getText().toString();
         desc = updateDesc.getText().toString().trim();
-        lang = updateLang.getText().toString();
+        especs = updateEspecs.getText().toString();
+        disp = updateDisp.getText().toString();
 
-        DataClass dataClass = new DataClass(title, desc, lang, imageUrl);
+        DataClass dataClass = new DataClass(producto,precio, marca, desc, especs, disp, imageUrl);
 
         databaseReference.setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

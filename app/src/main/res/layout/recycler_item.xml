@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/recTitle"
+                android:id="@+id/recProducto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Linea de Productos"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/recImage"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -82,7 +82,7 @@
                             android:layout_marginTop="10dp"/>
 
                         <TextView
-                            android:id="@+id/itemPrecio"
+                            android:id="@+id/recPrecio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="899.00"
@@ -109,7 +109,7 @@
                             android:layout_marginTop="10dp"/>
 
                         <TextView
-                            android:id="@+id/recLang"
+                            android:id="@+id/recMarca"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HUAWEI"
@@ -118,6 +118,8 @@
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"/>
+
+
 
                     </LinearLayout>
 
