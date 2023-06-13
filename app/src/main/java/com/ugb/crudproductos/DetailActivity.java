@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +22,8 @@ import com.google.firebase.storage.StorageReference;
 public class DetailActivity extends AppCompatActivity {
     TextView detailDesc, detailTitle, detailLang;
     ImageView detailImage;
-    FloatingActionButton deleteButton, editButton;
+    Button deleteButton, editButton;
+
     String key = "";
     String imageUrl = "";
     @SuppressLint("MissingInflatedId")

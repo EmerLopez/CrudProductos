@@ -6,9 +6,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="colorPrimaryDark">#DD582E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lavender">#8692f7</color>
     <color name="red">#c70000</color>
     <color name="green">#00ff00</color>
+    <color name="banner_background_light">#56F1E9CE</color>
+    <color name="colorLogin">#DDB642</color>
+    <color name="transparente">#00FFFFFF</color>
 
 </resources>
